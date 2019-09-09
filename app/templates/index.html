@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>
+    {{ title }}
+</title>
+{% endblock %}
+
+{% block content %}
+{% for c in content %}
+<h2>{{c.title}}</h2>
+<p>
+    <strong>{{c.author}}</strong> ({{c.year_published}})
+</p>
+<p>{{c.first_sentence}}</p>
+<hr/>
+{% endfor %}
+{% endblock %}

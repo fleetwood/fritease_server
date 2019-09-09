@@ -1,8 +1,13 @@
-from app import app, jsonify
+from app import app, jsonify, render_template
 
 url_apiV1 = '/api/v1'
 url_resources = url_apiV1 + '/resources'
 url_books = url_resources + '/books'
+urls = {
+    'api': url_apiV1,
+    'resources': url_resources,
+    'books': url_books
+}
 
 books = [
     {'id': 0,
@@ -31,8 +36,18 @@ def page_not_found(e):
 
 @app.route('/')
 @app.route('/index')
-def index():
-    return 'Hello FriTease!'
+@app.route('/book/<int:book_id>')
+@app.route('/index/book/<int:book_id>')
+def index(book_id=-1):
+    results = []
+
+    for book in books:
+        if book_id and book_id == book['id']:
+            results.append(book)
+        if not book_id >= 0:
+            results.append(book)
+
+    return render_template('index.html', title='FriTease', content=results)
 
 
 @app.route(url_books, methods=['GET'])
