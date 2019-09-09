@@ -7,12 +7,12 @@
 {% endblock %}
 
 {% block content %}
-{% for c in content %}
-<h2>{{c.title}}</h2>
-<p>
-    <strong>{{c.author}}</strong> ({{c.year_published}})
-</p>
-<p>{{c.first_sentence}}</p>
-<hr/>
-{% endfor %}
+    {% for c in content %}
+        <h2>{{c.title}}</h2>
+        <p>
+            <strong>{{c.author}}</strong>{% if c.year_published %}({{c.year_published}}){% endif %}
+        </p>
+        <p>{{c.first_sentence}}</p>
+        <hr/>
+    {% endfor %}
 {% endblock %}
