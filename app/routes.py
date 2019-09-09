@@ -1,4 +1,5 @@
 from app import app, jsonify, render_template
+from app.forms import LoginForm
 
 url_apiV1 = '/api/v1'
 url_resources = url_apiV1 + '/resources'
@@ -66,3 +67,9 @@ def books_by_id(book_id):
             results.append(book)
 
     return jsonify(results)
+
+
+@app.route('/login')
+def login():
+    form = LoginForm()
+    return render_template('login.html', title='Sign In', form=form)
