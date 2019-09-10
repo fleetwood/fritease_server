@@ -1,14 +1,10 @@
 from app import app, jsonify, render_template
+from flask import flash, redirect
 from app.forms import LoginForm
 
 url_apiV1 = '/api/v1'
 url_resources = url_apiV1 + '/resources'
 url_books = url_resources + '/books'
-urls = {
-    'api': url_apiV1,
-    'resources': url_resources,
-    'books': url_books
-}
 
 books = [
     {'id': 0,
@@ -69,7 +65,11 @@ def books_by_id(book_id):
     return jsonify(results)
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    if form.validate_on_submit():
+        flash('Login requested for user {}, remember_me={}'.format(
+            form.username.data, form.remember_me.data))
+        return redirect('/index')
     return render_template('login.html', title='Sign In', form=form)
